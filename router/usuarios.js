@@ -14,4 +14,7 @@ roteadorUsuarios.route('/usuarios').get((req, res) => usuarioController.todosUsu
 // Rota para buscar um usuário específico
 roteadorUsuarios.route('/usuarios/:id').get((req, res) => usuarioController.usuario(req, res));
 
+// Rota para lidar com o login
+roteadorUsuarios.route('/usuarios/login').post((req, res) => usuarioController.login(req, res));
+
 module.exports = roteadorUsuarios;

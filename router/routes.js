@@ -4,6 +4,8 @@ const roteadorEvento = require('./eventos');
 
 const roteadorUsuarios = require('./usuarios');
 
+const roteadorLogin = require('./login');
+
 // Saudação na rota principal
 roteador.route('/').get((req, res) => res.send(JSON.stringify({id: 1, teste: 'Olá mundooooo!'})));
 
@@ -12,5 +14,8 @@ roteador.use('/', roteadorEvento);
 
 // Usando o roteador de usuários
 roteador.use('/', roteadorUsuarios);
+
+// Usando o roteador de login
+roteador.use('/', roteadorLogin);
 
 module.exports = roteador;
