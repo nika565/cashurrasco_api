@@ -8,24 +8,6 @@ const EventoController = {
     criar: async (req, res) => {
 
         try {
-
-            // Algumas validações antes de salvar o evento
-
-            if (req.body.carnes == '' || req.body.carnes == 'undefined' || req.body.carnes == null) {
-                res.status(500).json({ status: error, msg: `Não foi possível salvar o evento. Verifique se todos os campos foram preenchidos corretamente` });
-                return;
-            }
-
-            if (req.body.bebidas == '' || req.body.bebidas == 'undefined' || req.body.bebidas == null) {
-                res.status(500).json({ status: error, msg: `Não foi possível salvar o evento. Verifique se todos os campos foram preenchidos corretamente` });
-                return;
-            }
-
-            if (req.body.suprimentos == '' || req.body.suprimentos == 'undefined' || req.body.suprimentos == null) {
-                res.status(500).json({ status: error, msg: `Não foi possível salvar o evento. Verifique se todos os campos foram preenchidos corretamente` });
-                return;
-            }
-
             // Salvando o evento:
             const evento = {
 
@@ -53,8 +35,7 @@ const EventoController = {
 
         } catch (error) {
             console.log(error);
-            res.status(500).json({ status: 'error', msg: `Algo deu errado no servidor.` });
-            return;
+            return res.status(500).json({ status: 'error', msg: `Algo deu errado no servidor.` });
         }
 
     },
@@ -74,7 +55,7 @@ const EventoController = {
 
         } catch (error) {
             console.log(error);
-            res.status(500).json({ status: "error", msg: "Algo deu errado no servidor..." });
+            return res.status(500).json({ status: "error", msg: "Algo deu errado no servidor..." });
         }
 
     },
@@ -103,11 +84,73 @@ const EventoController = {
 
         } catch (error) {
             console.log(error);
-            res.status(500).json({ status: 'error', msg: "Algo deu errado no servidor" });
+            return res.status(500).json({ status: 'error', msg: "Algo deu errado no servidor" });
+        }
+
+    },
+
+    // Editar evento
+    editar: async (req, res) => {
+
+        try {
+
+            // Pegando o id do evento que veio pela URL
+            const id = req.params.id;
+
+            const evento = {
+                idOrganizador: req.body.idOrganizador,
+                nomeEvento: req.body.nomeEvento,
+                qtdPessoas: req.body.qtdPessoas,
+                endereco: req.body.endereco,
+                carnes: req.body.carnes,
+                bebidas: req.body.bebidas,
+                suprimentos: req.body.suprimentos,
+                custoPessoa: req.body.custoPessoa,
+                custoTotal: req.body.custoTotal,
+
+            }
+
+            const edicao = await EventoModel.findByIdAndUpdate(id, evento);
+
+            if (edicao) {
+
+                res.status(200).json({msg: "Evento editado com sucesso.", status: "success", dados: edicao})
+
+            } else {
+                res.status(400).json({msg: "Não foi possível editar o evento.", status: "error"})
+            }
+
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({ msg: "Algo deu errado no servidor.", status: "error" })
+        }
+
+    },
+
+    // Apagar o evento
+    apagar: async (req, res) => {
+
+        try {
+
+            const id = req.params.id;
+
+            const deletar = await EventoModel.findByIdAndDelete(id);
+
+            if (deletar) {
+                res.status(200).json({msg: "Evento deletado com sucesso.", status: "success", resposta: deletar});
+            } else {
+                res.status(400).json({msg: "Não foi possível deletar o evento", status: "error"});
+            }
+
             return;
+            
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({msg: "Erro Interno no servidor", status: "error"});
         }
 
     }
+
 
 }
 

@@ -117,7 +117,7 @@ const UsuarioController = {
                 return;
 
             } else {
-                res.status(404).json({status: "error", msg: "Nenhum usuário emcontrado"});
+                res.status(404).json({status: "error", msg: "Email ou senha inválidos..."});
                 return;
             }
 
@@ -139,25 +139,6 @@ const UsuarioController = {
 
             // Pegando o ID por parâmetro que veio da URL
             const id = req.params.id;
-
-            const verificaEmail = await emailDuplicado(req.body.email);
-            
-            const verificaCelular = await cellDuplicado(req.body.celular);
-
-            console.log(verificaEmail);
-            console.log(verificaCelular);
-
-
-            // Verificação de email duplicado
-            if (verificaEmail){
-                return res.status(400).json({msg: "Campos de email ou senha inválidos.", status: "error"});
-            } 
-
-            // Verificação de telefone duplicado
-            if (verificaCelular){
-                return res.status(400).json({msg: "Campos de email ou senha inválidos.", status: "error"});
-            
-            }
 
             // Pegando a possível nova senha e a criptografando
             const novaSenha = await senhaCriptografada(req.body.senha);

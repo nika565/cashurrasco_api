@@ -10,7 +10,10 @@ roteadorEvento.route('/evento').post((req, res) => eventoController.criar(req, r
 // Rota para puxar um evento específico de um usuário
 roteadorEvento.route('/evento/:id').get((req, res) => eventoController.evento(req, res));
 
-// Rota para puxar todos os eventos de um usuário
-roteadorEvento.route('/eventos/:id').get((req, res) => eventoController.todosEventos(req, res));
+// Rota para editar um evento de um usuário
+roteadorEvento.route('/evento/:id').put((req, res) => eventoController.editar(req, res));
+
+// Rota para deletar um evento de um usuário
+roteadorEvento.route('/evento/:id').delete((req, res) => eventoController.apagar(req, res));
 
 module.exports = roteadorEvento;
