@@ -16,6 +16,6 @@ roteador.use('/', roteadorEvento);
 roteador.use('/', roteadorUsuarios);
 
 // Usando o roteador de login
-roteador.use('/', roteadorLogin);
+roteador.use('/usuarios', roteadorLogin);
 
 module.exports = roteador;

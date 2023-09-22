@@ -1,48 +1,38 @@
-// Usando criptografia para armazenar a senha
-const bcrypt = require('bcrypt');
+// Importando a funções para validações e processos
+const senhaCriptografada = require('./logic/senhaCripto');
+const verificarSenha = require('./logic/verificarSenha');
+const emailDuplicado = require('./logic/emailDuplicado');
+const cellDuplicado = require('./logic/cellDuplicado');
 
-// Função para criptografar a senha
-async function senhaCriptografada(senha) {
 
-    try {
-
-        const hash = await bcrypt.hash(senha, 10);
-
-        return hash;
-        
-    } catch (error) {
-        console.log(error);
-    }
-
-}
-
-// Função para verificar a senha que o usuário mandou e a senha salva no banco
-async function verificarSenha(senha, hash) {
-
-    try {
-
-        const validacao = await bcrypt.compare(senha, hash);
-
-        return validacao;
-        
-    } catch (error) {
-        console.log(`Erro ao comparar a senha: ${error}`);
-        return;
-    }
-
-}
-
+// Model para realizar as operações no banco de dados
 const UsuarioModel = require('../models/Usuario');
 
+// Objeto com os métodos para manipular o banco de dados e realizar o CRUD
 const UsuarioController = {
 
     // Método para criar o usuário no banco de dados
     criar: async (req, res) => {
 
         try {
-
-            const senha = await senhaCriptografada(req.body.senha);
             
+            const senha = await senhaCriptografada(req.body.senha);
+
+            const verificaEmail = await emailDuplicado(req.body.email);
+            
+            const verificaCelular = await cellDuplicado(req.body.celular);
+
+
+            // Verificação de email duplicado
+            if (verificaEmail){
+                return res.status(400).json({msg: "Campos de email ou senha inválidos.", status: "error"});
+            } 
+
+            // Verificação de telefone duplicado
+            if (verificaCelular){
+                return res.status(400).json({msg: "Campos de email ou senha inválidos.", status: "error"});
+            
+            } 
             const usuario = {
                 nome: req.body.nome,
                 email: req.body.email,
@@ -71,33 +61,7 @@ const UsuarioController = {
 
     },
 
-    // Listar todos os usuários
-    todosUsuarios: async (req, res) => {
-
-        try {
-
-            // Pegar todos os campos exceto a senha do usuário
-            const resposta = await UsuarioModel.find({}, '-senha').exec();
-
-            // Caso não encontre nenhum usuário...
-            if (!resposta || resposta.length < 1) {
-                return res.status(404).json({ status: 'error', msg: 'Nenhum usuário não encontrado.' });
-            }
-
-            res.status(200).json({status: "success", usuarios: resposta});
-
-            return;
-            
-        } catch (error) {
-            
-            console.log(error);
-            res.status(500).json({msg: "Erro interno no servidor.", status: "error"});
-            return;
-
-        }
-
-    },
-
+    // Buscar usuário
     usuario: async (req, res) => {
 
         try {
@@ -124,6 +88,7 @@ const UsuarioController = {
 
     },
 
+    // Método para lidar com login
     login: async (req, res) => {
 
         try {
@@ -162,6 +127,90 @@ const UsuarioController = {
             console.log(`Erro: ${error}`);
             res.status(500).json({status: "error", msg:"Algo deu errado no servidor"});
             return;
+
+        }
+
+    },
+
+    // Método para editar usuário
+    editar: async (req, res) => {
+
+        try {
+
+            // Pegando o ID por parâmetro que veio da URL
+            const id = req.params.id;
+
+            const verificaEmail = await emailDuplicado(req.body.email);
+            
+            const verificaCelular = await cellDuplicado(req.body.celular);
+
+            console.log(verificaEmail);
+            console.log(verificaCelular);
+
+
+            // Verificação de email duplicado
+            if (verificaEmail){
+                return res.status(400).json({msg: "Campos de email ou senha inválidos.", status: "error"});
+            } 
+
+            // Verificação de telefone duplicado
+            if (verificaCelular){
+                return res.status(400).json({msg: "Campos de email ou senha inválidos.", status: "error"});
+            
+            }
+
+            // Pegando a possível nova senha e a criptografando
+            const novaSenha = await senhaCriptografada(req.body.senha);
+
+            // Salavando as alterações que vieram da requisição
+            const usuario = {
+                nome: req.body.nome,
+                email: req.body.email,
+                celular: req.body.celular,
+                senha: novaSenha,
+            }
+
+            // Realizando a edição
+            const edicao = await UsuarioModel.findByIdAndUpdate(id, usuario);
+
+            if (!edicao) {
+                res.status(400).json({msg: "Não foi possível alterar o usuário.", status: "error"});
+            } else {
+                res.status(200).json({msg: "Usuário editado com sucesso!", status: "success", dados: edicao})
+            }
+
+            return;
+            
+        } catch (error) {
+            
+            console.log(error);
+            return res.status(500).json({msg: "Erro no servidor.", status: "error"});
+
+        }
+
+    },
+
+    // Método para excluir o usuário
+    apagar: async (req, res) => {
+
+        try {
+
+            const id = req.params.id;
+
+            const deletar = await UsuarioModel.findByIdAndDelete(id);
+
+            if (deletar) {
+                res.status(200).json({msg: "Usuário deletado com sucesso.", status: "success", resposta: deletar});
+            } else {
+                res.status(400).json({msg: "Não foi possível deletar o usuário", status: "error"});
+            }
+
+            return;
+            
+        } catch (error) {
+            
+            console.log(error);
+            return res.status(500).json({msg: "Erro no servidor.", status: "error"});
 
         }
 
