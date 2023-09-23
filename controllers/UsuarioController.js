@@ -31,8 +31,8 @@ const UsuarioController = {
             // Verificação de telefone duplicado
             if (verificaCelular){
                 return res.status(400).json({msg: "Campos de email ou senha inválidos.", status: "error"});
+            }
             
-            } 
             const usuario = {
                 nome: req.body.nome,
                 email: req.body.email,
@@ -76,7 +76,7 @@ const UsuarioController = {
                 return res.status(404).json({ status: 'error', msg: 'Usuário não encontrado.' });
             }
 
-            res.status(200).json({status: "success", usuario: resposta});
+            res.status(200).json({status: "success", usuario: resposta, msg: "Usuário retornado com sucesso."});
 
             return;
             

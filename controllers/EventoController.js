@@ -40,7 +40,7 @@ const EventoController = {
 
     },
 
-    // ver todos os eventos criados
+    // Ver todos os eventos criados
     todosEventos: async (req, res) => {
 
         try {
@@ -49,7 +49,7 @@ const EventoController = {
 
             const resposta = await EventoModel.find({ idOrganizador: id });
 
-            res.status(200).json({ eventos: resposta });
+            res.status(200).json({ eventos: resposta, status: "success", msg: "Eventos retornados." });
 
             return;
 
@@ -76,7 +76,7 @@ const EventoController = {
 
             } else {
 
-                res.status(200).json(resposta);
+                res.status(200).json({msg: "Evento retornado.", status: "success", evento: resposta});
 
             }
 
