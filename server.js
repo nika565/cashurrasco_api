@@ -30,4 +30,4 @@ app.listen(port, () => {
     console.log(`Acesse http://localhost:9001`);
 });
 
-// export default app;
+export default app;

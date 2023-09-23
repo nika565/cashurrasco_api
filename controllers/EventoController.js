@@ -26,9 +26,9 @@ const EventoController = {
             const resposta = await EventoModel.create(evento);
 
             if (!resposta) {
-                res.status(400).json({ msg: "Erro ao salvar o evento." })
+                res.status(400).json({ msg: "Erro ao salvar o evento.", status: "error" })
             } else {
-                res.status(201).json({ msg: "Evento cadastrado com sucesso.", resposta });
+                res.status(201).json({ msg: "Evento cadastrado com sucesso.", status: "success", resposta });
             }
 
             return;
