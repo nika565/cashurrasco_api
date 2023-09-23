@@ -16,7 +16,17 @@ const eventoSchema = new Schema({
         required: true
     },
 
-    qtdPessoas: {
+    qtdHomens: {
+        type: Number,
+        required: true
+    },
+
+    qtdMulheres: {
+        type: Number,
+        required: true
+    },
+
+    qtdCriancas: {
         type: Number,
         required: true
     },
@@ -34,7 +44,7 @@ const eventoSchema = new Schema({
         type: Schema.Types.Mixed
     },
 
-    suprimentos: {
+    acompanhamentos: {
         type: Schema.Types.Mixed
     },
 

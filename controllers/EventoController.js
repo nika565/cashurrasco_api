@@ -1,6 +1,9 @@
 // Importando o Model para fazer as operações no meu banco de dados
 const EventoModel = require('../models/Evento');
 
+// Importando a função que executa o cálculo
+const calculoChurrasco = require('./logic/calculoChurrasco');
+
 // Função que contém todos os métodos para realizar as operações no meu banco de dados
 const EventoController = {
 
@@ -13,17 +16,22 @@ const EventoController = {
 
                 idOrganizador: req.body.idOrganizador,
                 nomeEvento: req.body.nomeEvento,
-                qtdPessoas: req.body.qtdPessoas,
+                qtdHomens: req.body.qtdHomens,
+                qtdMulheres: req.body.qtdMulheres,
+                qtdCriancas: req.body.qtdCriancas,
                 endereco: req.body.endereco,
                 carnes: req.body.carnes,
                 bebidas: req.body.bebidas,
-                suprimentos: req.body.suprimentos,
-                custoPessoa: req.body.custoPessoa,
-                custoTotal: req.body.custoTotal,
+                acompanhamentos: req.body.acompanhamentos,
+                // custoPessoa: req.body.custoPessoa,
+                // custoTotal: req.body.custoTotal,
 
             }
 
-            const resposta = await EventoModel.create(evento);
+            // Executando o cálculo antes de salvar o evento
+            const calculo = calculoChurrasco(evento);
+
+            const resposta = await EventoModel.create(calculo);
 
             if (!resposta) {
                 res.status(400).json({ msg: "Erro ao salvar o evento.", status: "error" })
