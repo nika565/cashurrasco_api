@@ -25,12 +25,12 @@ const UsuarioController = {
 
             // Verificação de email duplicado
             if (verificaEmail){
-                return res.status(400).json({msg: "Campos de email ou senha inválidos.", status: "error"});
+                return res.status(400).json({msg: "Campos de email ou telefone inválidos.", status: "error"});
             } 
 
             // Verificação de telefone duplicado
             if (verificaCelular){
-                return res.status(400).json({msg: "Campos de email ou senha inválidos.", status: "error"});
+                return res.status(400).json({msg: "Campos de email ou telefone inválidos.", status: "error"});
             }
             
             const usuario = {
@@ -194,7 +194,7 @@ const UsuarioController = {
             const deletar = await UsuarioModel.findByIdAndDelete(id);
 
             if (deletar) {
-                res.status(200).json({msg: "Usuário deletado com sucesso.", status: "success", resposta: deletar});
+                res.status(200).json({msg: "Usuário deletado com sucesso.", status: "success"});
             } else {
                 res.status(400).json({msg: "Não foi possível deletar o usuário", status: "error"});
             }

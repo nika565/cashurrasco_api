@@ -149,7 +149,7 @@ const EventoController = {
             const deletar = await EventoModel.findByIdAndDelete(id);
 
             if (deletar) {
-                res.status(200).json({msg: "Evento deletado com sucesso.", status: "success", resposta: deletar});
+                res.status(200).json({msg: "Evento deletado com sucesso.", status: "success"});
             } else {
                 res.status(400).json({msg: "Não foi possível deletar o evento", status: "error"});
             }
