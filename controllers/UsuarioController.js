@@ -76,7 +76,7 @@ const UsuarioController = {
             const id = req.params.id;
 
             // o .exec() serve para retornar uma promise
-            const resposta = await UsuarioModel.find({ _id: id }, '-senha').exec();
+            const resposta = await UsuarioModel.findOne({ _id: id }, '-senha').exec();
 
             // Caso não encontre nenhum usuário...
             if (!resposta || resposta.length < 1) {
