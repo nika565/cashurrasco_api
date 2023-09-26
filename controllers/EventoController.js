@@ -22,9 +22,8 @@ const EventoController = {
                 endereco: req.body.endereco,
                 carnes: req.body.carnes,
                 bebidas: req.body.bebidas,
+                suprimentos: req.body.suprimentos,
                 acompanhamentos: req.body.acompanhamentos,
-                // custoPessoa: req.body.custoPessoa,
-                // custoTotal: req.body.custoTotal,
 
             }
 
@@ -36,7 +35,7 @@ const EventoController = {
             if (!resposta) {
                 res.status(400).json({ msg: "Erro ao salvar o evento.", status: "error" })
             } else {
-                res.status(201).json({ msg: "Evento cadastrado com sucesso.", status: "success", resposta });
+                res.status(201).json({ msg: "Evento cadastrado com sucesso.", status: "success", dados: resposta });
             }
 
             return;
@@ -57,8 +56,10 @@ const EventoController = {
 
             const resposta = await EventoModel.find({ idOrganizador: id });
 
+            if (resposta.length == 0) return res.status(404).json({ status: "error", msg: "Nenhum evento encontrado." });
+            
             res.status(200).json({ eventos: resposta, status: "success", msg: "Eventos retornados." });
-
+            
             return;
 
         } catch (error) {
@@ -108,13 +109,16 @@ const EventoController = {
             const evento = {
                 idOrganizador: req.body.idOrganizador,
                 nomeEvento: req.body.nomeEvento,
-                qtdPessoas: req.body.qtdPessoas,
+                qtdHomens: req.body.qtdHomens,
+                qtdMulheres: req.body.qtdMulheres,
+                qtdCriancas: req.body.qtdCriancas,
                 endereco: req.body.endereco,
                 carnes: req.body.carnes,
                 bebidas: req.body.bebidas,
                 suprimentos: req.body.suprimentos,
-                custoPessoa: req.body.custoPessoa,
-                custoTotal: req.body.custoTotal,
+                acompanhamentos: req.body.acompanhamentos,
+                // custoPessoa: req.body.custoPessoa,
+                // custoTotal: req.body.custoTotal,
 
             }
 

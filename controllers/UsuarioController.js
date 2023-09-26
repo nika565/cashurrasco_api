@@ -42,6 +42,13 @@ const UsuarioController = {
 
             const resposta = await UsuarioModel.create(usuario);
 
+            const dadosUsuario = {
+                id: resposta._id,
+                nome: resposta.nome,
+                email: resposta.email,
+                celular: resposta.celular
+            }
+
             if (!resposta) {
 
                 res.status(400).json({status: "error", msg: "Erro ao cadastrar usuário"});
@@ -49,7 +56,7 @@ const UsuarioController = {
 
             }
 
-            res.status(201).json({status: "success", msg: "Usuário criado com sucesso!", resposta: resposta});
+            res.status(201).json({status: "success", msg: "Usuário criado com sucesso!", dados: dadosUsuario});
 
             return;
 
@@ -106,10 +113,16 @@ const UsuarioController = {
                 // Processo de verificar a senha
                 const senha = await verificarSenha(req.body.senha, verificaEmail.senha);
 
-                console.log(senha);
+                // Dados do usuário a ser retornado
+                const dadosUsuario = {
+                    id: verificaEmail._id,
+                    nome: verificaEmail.nome,
+                    email: verificaEmail.email,
+                    celular: verificaEmail.celular
+                }
 
                 if (senha) {
-                    res.status(200).json({msg: 'Logado!', status: 'success'})
+                    res.status(200).json({msg: 'Logado!', status: 'success', dados: dadosUsuario})
                 } else {
                     res.status(400).json({status: "error", msg: "Email ou senha inválidos..."});
                 }

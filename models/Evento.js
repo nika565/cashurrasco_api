@@ -44,6 +44,10 @@ const eventoSchema = new Schema({
         type: Schema.Types.Mixed
     },
 
+    suprimentos: {
+        type: Schema.Types.Mixed
+    },
+
     acompanhamentos: {
         type: Schema.Types.Mixed
     },
