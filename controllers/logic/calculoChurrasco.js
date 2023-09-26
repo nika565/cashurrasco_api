@@ -123,9 +123,9 @@ function calculoChurrasco (obj) {
     obj.acompanhamentos.vinagrete.selecionado ? obj.acompanhamentos.vinagrete.precoTotal = qtdAcompanhamentos * 2.15 : obj.acompanhamentos.vinagrete.precoTotal = 0;
     obj.acompanhamentos.queijoCoalho.selecionado ? obj.acompanhamentos.queijoCoalho.precoTotal = qtdAcompanhamentos * 6.25 : obj.acompanhamentos.queijoCoalho.precoTotal = 0;
 
-    soma += obj.acompanhamentos.arroz.precoTotal + obj.acompanhamentos.farofa.precoTotal + obj.acompanhamentos.pao.precoTotal + obj.acompanhamentos.paoAlho.precoTotal + obj.acompanhamentos.vinagrete.precoTotal + obj.acompanhamentos.queijoCoalho.precoTotal
+    soma += obj.acompanhamentos.arroz.precoTotal + obj.acompanhamentos.farofa.precoTotal + obj.acompanhamentos.pao.precoTotal + obj.acompanhamentos.paoAlho.precoTotal + obj.acompanhamentos.vinagrete.precoTotal + obj.acompanhamentos.queijoCoalho.precoTotal + obj.custoLocal
 
-    obj.custoPessoa = soma / (qtdConsumoHomens + qtdConsumoMulheres + qtdConsumoCriancas);
+    obj.custoPessoa = soma / (obj.qtdHomens + obj.qtdMulheres);
     obj.custoTotal = soma;
 
     return obj;
