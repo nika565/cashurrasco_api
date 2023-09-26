@@ -36,6 +36,11 @@ const eventoSchema = new Schema({
         required: true
     },
 
+    custoLocal: {
+        type: Number,
+        required: true
+    },
+
     carnes: {
         type: Schema.Types.Mixed
     },

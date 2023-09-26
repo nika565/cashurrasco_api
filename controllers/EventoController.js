@@ -20,10 +20,11 @@ const EventoController = {
                 qtdMulheres: req.body.qtdMulheres,
                 qtdCriancas: req.body.qtdCriancas,
                 endereco: req.body.endereco,
+                custoLocal: req.body.custoLocal,
                 carnes: req.body.carnes,
                 bebidas: req.body.bebidas,
                 suprimentos: req.body.suprimentos,
-                acompanhamentos: req.body.acompanhamentos,
+                acompanhamentos: req.body.acompanhamentos
 
             }
 
@@ -113,12 +114,11 @@ const EventoController = {
                 qtdMulheres: req.body.qtdMulheres,
                 qtdCriancas: req.body.qtdCriancas,
                 endereco: req.body.endereco,
+                custoLocal: req.body.custoLocal,
                 carnes: req.body.carnes,
                 bebidas: req.body.bebidas,
                 suprimentos: req.body.suprimentos,
-                acompanhamentos: req.body.acompanhamentos,
-                // custoPessoa: req.body.custoPessoa,
-                // custoTotal: req.body.custoTotal,
+                acompanhamentos: req.body.acompanhamentos
 
             }
 
