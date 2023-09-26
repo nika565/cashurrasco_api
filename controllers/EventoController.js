@@ -31,12 +31,18 @@ const EventoController = {
             // Executando o cálculo antes de salvar o evento
             const calculo = calculoChurrasco(evento);
 
-            const resposta = await EventoModel.create(calculo);
+            if (calculo) {
 
-            if (!resposta) {
-                res.status(400).json({ msg: "Erro ao salvar o evento.", status: "error" })
+                const resposta = await EventoModel.create(calculo);
+
+                if (!resposta) {
+                    res.status(400).json({ msg: "Erro ao salvar o evento.", status: "error" })
+                } else {
+                    res.status(201).json({ msg: "Evento cadastrado com sucesso.", status: "success", dados: resposta });
+                }
+
             } else {
-                res.status(201).json({ msg: "Evento cadastrado com sucesso.", status: "success", dados: resposta });
+                res.status(400).json({ msg: "Erro ao salvar o evento. Verifique os campos digitados", status: "error" })
             }
 
             return;
@@ -58,9 +64,9 @@ const EventoController = {
             const resposta = await EventoModel.find({ idOrganizador: id });
 
             if (resposta.length == 0) return res.status(404).json({ status: "error", msg: "Nenhum evento encontrado." });
-            
+
             res.status(200).json({ eventos: resposta, status: "success", msg: "Eventos retornados." });
-            
+
             return;
 
         } catch (error) {
@@ -86,7 +92,7 @@ const EventoController = {
 
             } else {
 
-                res.status(200).json({msg: "Evento retornado.", status: "success", evento: resposta});
+                res.status(200).json({ msg: "Evento retornado.", status: "success", evento: resposta });
 
             }
 
@@ -126,10 +132,10 @@ const EventoController = {
 
             if (edicao) {
 
-                res.status(200).json({msg: "Evento editado com sucesso.", status: "success", dados: edicao})
+                res.status(200).json({ msg: "Evento editado com sucesso.", status: "success", dados: edicao })
 
             } else {
-                res.status(400).json({msg: "Não foi possível editar o evento.", status: "error"})
+                res.status(400).json({ msg: "Não foi possível editar o evento.", status: "error" })
             }
 
         } catch (error) {
@@ -149,16 +155,16 @@ const EventoController = {
             const deletar = await EventoModel.findByIdAndDelete(id);
 
             if (deletar) {
-                res.status(200).json({msg: "Evento deletado com sucesso.", status: "success"});
+                res.status(200).json({ msg: "Evento deletado com sucesso.", status: "success" });
             } else {
-                res.status(400).json({msg: "Não foi possível deletar o evento", status: "error"});
+                res.status(400).json({ msg: "Não foi possível deletar o evento", status: "error" });
             }
 
             return;
-            
+
         } catch (error) {
             console.log(error);
-            return res.status(500).json({msg: "Erro Interno no servidor", status: "error"});
+            return res.status(500).json({ msg: "Erro Interno no servidor", status: "error" });
         }
 
     }

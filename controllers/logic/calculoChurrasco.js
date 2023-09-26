@@ -125,6 +125,8 @@ function calculoChurrasco (obj) {
 
     soma += obj.acompanhamentos.arroz.precoTotal + obj.acompanhamentos.farofa.precoTotal + obj.acompanhamentos.pao.precoTotal + obj.acompanhamentos.paoAlho.precoTotal + obj.acompanhamentos.vinagrete.precoTotal + obj.acompanhamentos.queijoCoalho.precoTotal + obj.custoLocal
 
+    if (soma == 0) return false
+
     obj.custoPessoa = soma / (obj.qtdHomens + obj.qtdMulheres);
     obj.custoTotal = soma;
 
