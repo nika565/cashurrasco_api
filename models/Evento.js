@@ -41,6 +41,11 @@ const eventoSchema = new Schema({
         required: true
     },
 
+    dataEvento: {
+        type: Date,
+        required: true
+    },
+
     carnes: {
         type: Schema.Types.Mixed
     },
