@@ -64,8 +64,6 @@ const EventoController = {
 
             const resposta = await EventoModel.find({ idOrganizador: id });
 
-            if (resposta.length == 0) return res.status(404).json({ status: "error", msg: "Nenhum evento encontrado." });
-
             res.status(200).json({ eventos: resposta, status: "success", msg: "Eventos retornados." });
 
             return;
