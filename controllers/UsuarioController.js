@@ -3,6 +3,7 @@ const senhaCriptografada = require('./logic/senhaCripto');
 const verificarSenha = require('./logic/verificarSenha');
 const emailDuplicado = require('./logic/emailDuplicado');
 const cellDuplicado = require('./logic/cellDuplicado');
+const validaNumeroCelular = require('./logic/validaNumeroCelular')
 
 
 // Model para realizar as operações no banco de dados
@@ -22,6 +23,8 @@ const UsuarioController = {
             
             const verificaCelular = await cellDuplicado(req.body.celular);
 
+            const validaCelular = validaNumeroCelular(req.body.celular);
+
 
             // Verificação de email duplicado
             if (verificaEmail){
@@ -33,6 +36,11 @@ const UsuarioController = {
                 return res.status(400).json({msg: "Campos de email ou telefone inválidos.", status: "error"});
             }
             
+            // Verificação se o número digitado está correto
+            if (validaCelular){
+                return res.status(400).json({msg: "Campos de email ou telefone inválidos.", status: "error"});
+            }
+
             const usuario = {
                 nome: req.body.nome,
                 email: req.body.email,
@@ -122,7 +130,7 @@ const UsuarioController = {
                 }
 
                 if (senha) {
-                    res.status(200).json({msg: 'Logado!', status: 'success', dados: dadosUsuario})
+                    res.status(200).json({msg: `Seja bem vindo: ${dadosUsuario.nome}`, status: 'success', dados: dadosUsuario})
                 } else {
                     res.status(400).json({status: "error", msg: "Email ou senha inválidos..."});
                 }
@@ -155,6 +163,8 @@ const UsuarioController = {
 
             // Pegando a possível nova senha e a criptografando
             const novaSenha = await senhaCriptografada(req.body.senha);
+
+            const validaCelular = validaNumeroCelular(req.body.celular);
 
             // Salavando as alterações que vieram da requisição
             const usuario = {
