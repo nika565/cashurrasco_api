@@ -70,7 +70,7 @@ const UsuarioController = {
 
         } catch (error) {
             console.log(error);
-            res.status(500).json({ status: "error", msg: "Algo deu errado no servidor" });
+            res.status(500).json({ status: "error", msg: "Erro ao cadastrar usuário, verifique se todos os campos foram digitados corretamente." });
             return;
         }
 
@@ -188,7 +188,7 @@ const UsuarioController = {
         } catch (error) {
             
             console.log(error);
-            return res.status(500).json({msg: "Erro no servidor.", status: "error"});
+            return res.status(500).json({msg: "Erro ao cadastrar usuário, verifique se todos os campos foram digitados corretamente.", status: "error"});
 
         }
 
