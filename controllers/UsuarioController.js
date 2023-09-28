@@ -37,9 +37,9 @@ const UsuarioController = {
             }
             
             // Verificação se o número digitado está correto
-            if (validaCelular){
-                return res.status(400).json({msg: "Campos de email ou telefone inválidos.", status: "error"});
-            }
+            // if (validaCelular){
+            //     return res.status(400).json({msg: "Campos de email ou telefone inválidos.", status: "error"});
+            // }
 
             const usuario = {
                 nome: req.body.nome,
@@ -164,7 +164,7 @@ const UsuarioController = {
             // Pegando a possível nova senha e a criptografando
             const novaSenha = await senhaCriptografada(req.body.senha);
 
-            const validaCelular = validaNumeroCelular(req.body.celular);
+            // const validaCelular = validaNumeroCelular(req.body.celular);
 
             // Salavando as alterações que vieram da requisição
             const usuario = {
