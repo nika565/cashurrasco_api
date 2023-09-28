@@ -4,7 +4,7 @@ function  validaNumeroCelular(num) {
     // verificando se o número possuí letras
     const regex = /[a-zA-Z]/;
 
-    if(!regex.test(num)) return true
+    if(regex.test(num)) return true
 
     // Removendo possíveis símbolos
     const numero = num.replace(/[^0-9]/g, '')
