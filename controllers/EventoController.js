@@ -135,7 +135,16 @@ const EventoController = {
 
             if (edicao) {
 
-                res.status(200).json({ msg: "Evento editado com sucesso.", status: "success", dados: edicao })
+                const dados = await EventoModel.findById(id);
+
+                if (dados) {
+
+                    res.status(200).json({ msg: "Evento editado com sucesso.", status: "success", dados: dados })
+
+                } else {
+                    res.status(400).json({ msg: "Não foi possível editar o evento.", status: "error" })
+                }
+
 
             } else {
                 res.status(400).json({ msg: "Não foi possível editar o evento.", status: "error" })
