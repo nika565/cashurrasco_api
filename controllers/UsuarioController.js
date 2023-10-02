@@ -161,17 +161,13 @@ const UsuarioController = {
             // Pegando o ID por parâmetro que veio da URL
             const id = req.params.id;
 
-            // Pegando a possível nova senha e a criptografando
-            const novaSenha = await senhaCriptografada(req.body.senha);
-
             // const validaCelular = validaNumeroCelular(req.body.celular);
 
             // Salavando as alterações que vieram da requisição
             const usuario = {
                 nome: req.body.nome,
                 email: req.body.email,
-                celular: req.body.celular,
-                senha: novaSenha,
+                celular: req.body.celular
             }
 
             // Realizando a edição
@@ -188,7 +184,7 @@ const UsuarioController = {
         } catch (error) {
             
             console.log(error);
-            return res.status(500).json({msg: "Erro ao cadastrar usuário, verifique se todos os campos foram digitados corretamente.", status: "error"});
+            return res.status(500).json({msg: "Erro ao editar usuário, verifique se todos os campos foram digitados corretamente.", status: "error"});
 
         }
 
