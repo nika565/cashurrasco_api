@@ -130,7 +130,10 @@ const EventoController = {
 
             }
 
-            const edicao = await EventoModel.findByIdAndUpdate(id, evento);
+            // Executando o cálculo antes de salvar o evento
+            const calculo = calculoChurrasco(evento);
+
+            const edicao = await EventoModel.findByIdAndUpdate(id, calculo);
 
             if (edicao) {
 
