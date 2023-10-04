@@ -32,7 +32,7 @@ const EventoController = {
 
             }
 
-            if (dataIncorreta(evento.dataEvento)) return res.status(400).json({ msg: "Data incorreta.", status: "error" })
+            if (dataIncorreta(evento.dataEvento)) return res.status(400).json({ msg: "Data incorreta. A data precisa estar no seguinte formato: Dia/Mês/Ano ", status: "error" })
 
             // Executando o cálculo antes de salvar o evento
             const calculo = calculoChurrasco(evento);
@@ -135,6 +135,8 @@ const EventoController = {
 
             // Executando o cálculo antes de salvar o evento
             const calculo = calculoChurrasco(evento);
+
+            if (dataIncorreta(evento.dataEvento)) return res.status(400).json({ msg: "Data incorreta. A data precisa estar no seguinte formato: Dia/Mês/Ano ", status: "error" })
 
             const edicao = await EventoModel.findByIdAndUpdate(id, calculo);
 
