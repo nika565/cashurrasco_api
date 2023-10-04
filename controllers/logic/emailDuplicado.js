@@ -16,7 +16,7 @@ async function emailDuplicado(email) {
 
         const verificacao = regex.test(email)
 
-        if (!verificacao) return false
+        if (!verificacao) return true
             
         return true;
 
