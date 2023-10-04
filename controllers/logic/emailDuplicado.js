@@ -10,6 +10,13 @@ async function emailDuplicado(email) {
         const array = await UsuarioModel.find({ email: email });
 
         if (array.length == 0) return false;
+
+        // Verificando se o emial possui "@"
+        const regex = /@/;
+
+        const verificacao = regex.test(email)
+
+        if (!verificacao) return false
             
         return true;
 
