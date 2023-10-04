@@ -4,6 +4,9 @@ const EventoModel = require('../models/Evento');
 // Importando a função que executa o cálculo
 const calculoChurrasco = require('./logic/calculoChurrasco');
 
+// Função que valida data
+const dataIncorreta = require('./logic/dataIncorreta');
+
 // Função que contém todos os métodos para realizar as operações no meu banco de dados
 const EventoController = {
 
@@ -29,6 +32,8 @@ const EventoController = {
 
             }
 
+            if (dataIncorreta(evento.dataEvento)) return res.status(400).json({ msg: "Data incorreta.", status: "error" })
+
             // Executando o cálculo antes de salvar o evento
             const calculo = calculoChurrasco(evento);
 
@@ -50,7 +55,7 @@ const EventoController = {
 
         } catch (error) {
             console.log(error);
-            return res.status(500).json({ status: 'error', msg: `Algo deu errado no servidor.` });
+            return res.status(500).json({ status: 'error', msg: `Algo deu errado, tente novamente.` });
         }
 
     },

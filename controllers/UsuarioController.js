@@ -28,18 +28,18 @@ const UsuarioController = {
 
             // Verificação de email duplicado
             if (verificaEmail){
-                return res.status(400).json({msg: "Campos de email ou telefone inválidos.", status: "error"});
+                return res.status(400).json({msg: "Campo de email inválido.", status: "error"});
             } 
 
             // Verificação de telefone duplicado
             if (verificaCelular){
-                return res.status(400).json({msg: "Campos de email ou telefone inválidos.", status: "error"});
+                return res.status(400).json({msg: "Campo de telefone inválido.", status: "error"});
             }
             
             // Verificação se o número digitado está correto
-            // if (validaCelular){
-            //     return res.status(400).json({msg: "Campos de email ou telefone inválidos.", status: "error"});
-            // }
+            if (!validaCelular){
+                return res.status(400).json({msg: "Campo de telefone inválido.", status: "error"});
+            }
 
             const usuario = {
                 nome: req.body.nome,
