@@ -12,7 +12,7 @@ function dataIncorreta(data) {
     const dataUsuario = converterData(data);
 
     // Verificando se a data é menor que a data atual
-    if (dataUsuario < dataAtual) {
+    if (dataUsuario.getTime() < dataAtual.getTime()) {
         return true;
     }
 
