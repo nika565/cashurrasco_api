@@ -42,7 +42,7 @@ const eventoSchema = new Schema({
     },
 
     dataEvento: {
-        type: Date,
+        type: String,
         required: true
     },
 
