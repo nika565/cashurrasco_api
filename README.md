@@ -732,5 +732,3 @@ A API "Cashurrasco" foi projetada para ser fácil de usar e flexível, atendendo
                 	status: "error"
                 }
                 ```
-                
-                - **Exemplo de código:**
